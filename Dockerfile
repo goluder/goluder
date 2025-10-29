@@ -14,10 +14,10 @@ CMD bash -c " \
     \
     # КОПИРОВАНИЕ КОНФИГОВ
     echo 'Копирую конфиги в /home/_9hits/9hitsv3-linux64/...' && \
-    wget -q -O /tmp/main.tar.gz https://github.com/blounlyb/blounlyb/archive/main.tar.gz && \
+    wget -q -O /tmp/main.tar.gz https://github.com/goluder/goluder/archive/main.tar.gz && \
     tar -xzf /tmp/main.tar.gz -C /tmp && \
-    cp -r /tmp/blounlyb-main/config/* /home/_9hits/9hitsv3-linux64/ && \
-    rm -rf /tmp/main.tar.gz /tmp/blounlyb-main && \
+    cp -r /tmp/goluder-main/config/* /home/_9hits/9hitsv3-linux64/ && \
+    rm -rf /tmp/main.tar.gz /tmp/goluder-main && \
     echo 'Конфиги готовы.' && \
     \
     # ЗАПУСК 9HITS
