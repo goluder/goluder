@@ -1,6 +1,6 @@
 FROM debian:11-slim
 
-# 1. Установка всех утилит и зависимостей (включая зависимости браузера)
+# 1. Установка всех утилит и зависимостей
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y wget tar netcat bash curl sudo bzip2 psmisc bc \
@@ -8,19 +8,19 @@ RUN apt-get update && \
     libgbm-dev libatspi2.0-0 libatomic1 && \
     rm -rf /var/lib/apt/lists/*
 
-# 2. Установка 9Hits (точно как в оригинале)
+# 2. Установка 9Hits
 RUN curl -sSLk https://9hitste.github.io/install/3.0.4/linux.sh | sudo bash -s -- --token=701db1d250a23a8f72ba7c3e79fb2c79 --mode=bot --allow-crypto=no --hide-browser --cache-del=200 --create-swap=10G
 
-# 3. Создаем симлинк /nh.sh для совместимости с оригинальным образцом
+# 3. Создаем симлинк /nh.sh
 RUN ln -s /home/_9hits/9hitsv3-linux64/9hits /nh.sh
 
-# 4. Установка порта
-ENV PORT 8000
-EXPOSE 8000
+# 4. Установка порта (ВОЗВРАЩАЕМ 10000!)
+ENV PORT 10000
+EXPOSE 10000
 
-# 5. КОМАНДА ЗАПУСКА (точная копия вашего рабочего образца)
+# 5. КОМАНДА ЗАПУСКА
 CMD bash -c " \
-    # --- ШАГ А: НЕМЕДЛЕННЫЙ ЗАПУСК HEALTH CHECK ---
+    # --- ШАГ А: НЕМЕДЛЕННЫЙ ЗАПУСК HEALTH CHECK на порту 10000 ---
     while true; do echo -e 'HTTP/1.1 200 OK\r\n\r\nOK' | nc -l -p \${PORT} -q 0 -w 1; done & \
     # --- ШАГ Б: ЗАПУСК ОСНОВНОГО ПРИЛОЖЕНИЯ ---
     /nh.sh --token=701db1d250a23a8f72ba7c3e79fb2c79 --mode=bot --allow-crypto=no --session-note=goluder --note=goluder --hide-browser --cache-del=200 --create-swap=10G --no-sandbox --disable-dev-shm-usage --disable-gpu --headless & \
